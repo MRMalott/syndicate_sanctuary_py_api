@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+           "name": "SAM CLI Python webhook",
+           "type": "python",
+           "request": "attach",
+           "port": 5890,
+           "host": "localhost",
+           "pathMappings": [
+               {
+                   "localRoot": "${workspaceFolder}/app",
+                   "remoteRoot": "/var/task"
+               }
+           ]
+       }
+   ]
+}

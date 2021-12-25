@@ -1,0 +1,16 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "syndicate-sanctuary-py-api-stg"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-6jaufp3eedwj"
+s3_prefix = "syndicate-sanctuary-py-api-stg"
+region = "us-east-2"
+profile = "personal"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = [
+    "Environment=staging",
+    "AwsRegion=us-east-2",
+    "Secrets=staging/py-api-secrets",
+]

@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: syndicate_sanctuary_py_api
+
+Globals:
+  Function:
+    Timeout: 60
+
+Parameters:
+  Environment:
+    Type: String
+    AllowedValues:
+      - staging
+      - prod
+    Description: Deployment environment
+
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        Authorizers:
+          CognitoAuth:
+            UserPoolArn: !Ref CognitoUserPoolArn
+      Cors:
+        AllowMethods: "'POST,GET,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with,x-requested-for'"
+        AllowOrigin: "'*'"
+      GatewayResponses:
+        DEFAULT_4xx:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: "'*'"
+        DEFAULT_5xx:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: "'*'"
+
+  CreateInitialUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app/
+      Handler: create_initial_user_handler.create_initial_user
+      Runtime: python3.8
+      Environment:
+        Variables:
+          AWS_SECRETS_REGION: !Ref AwsSecretsRegion
+          AUTH_SECRET_ID: !Ref LeadSigmaAuthSecretId
+          AUTH_SERVICE_URL: !Ref LeadSigmaAuthServiceUrl
+      Policies:
+        - "SecretsManagerReadWrite"
+        - "AmazonCognitoPowerUser"
+        - "AWSLambdaBasicExecutionRole"
+      Events:
+        Setup:
+          Type: Api
+          Properties:
+            Path: /create_initial_user
+            Method: POST
+            RestApiId: !Ref ApiGatewayApi

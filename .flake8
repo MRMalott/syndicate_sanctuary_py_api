@@ -1,0 +1,5 @@
+[flake8]
+exclude = .git,__pycache__,.aws-sam,.pytest_cache,.vscode
+max-complexity = 10
+max-line-length = 127
+select = E1,E9,E711,E712,E713,E714,F63,F7,F82,F631,F632,F634,F701,F702,F703,F704,F705,F706,F707,F811,F821,F823,F831,F841
