@@ -13,9 +13,6 @@ Parameters:
       - staging
       - prod
     Description: Deployment environment
-  AwsRegion:
-    Type: String
-    Description: "AWS Region to use"
 
 Resources:
   ApiGatewayApi:
@@ -42,9 +39,6 @@ Resources:
       CodeUri: app/
       Handler: create_initial_user_handler.create_initial_user
       Runtime: python3.8
-      Environment:
-        Variables:
-          AWS_REGION: !Ref AwsRegion
       Policies:
         - "SecretsManagerReadWrite"
         - "AmazonCognitoPowerUser"
