@@ -3,7 +3,7 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "syndicate-sanctuary-py-api-stg"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-6jaufp3eedwj"
+s3_bucket = "py-aws-sam-cli-bucket"
 s3_prefix = "syndicate-sanctuary-py-api-stg"
 region = "us-east-2"
 profile = "personal"
